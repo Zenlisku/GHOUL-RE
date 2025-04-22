@@ -5,7 +5,49 @@ local CoreGui = game:GetService("CoreGui")
 local LocalPlayer = Players.LocalPlayer
 local Cam = workspace.CurrentCamera
 
-local SimpleESP = {}
+local SimpleESP = {
+    Enabled = false,
+    TeamCheck = false,
+    MaxDistance = 500,
+    FontSize = 11,
+    FadeOut = {
+        OnDistance = false,
+    },
+    Drawing = {
+        Names = {
+            Enabled = false,
+            RGB = Color3.fromRGB(255, 255, 255),
+        },
+        Distances = {
+            Enabled = false, 
+            Position = "Text",
+            RGB = Color3.fromRGB(255, 255, 255),
+        },
+        Healthbar = {
+            Enabled = false,  
+            HealthText = false, 
+            Lerp = true, 
+            HealthTextRGB = Color3.fromRGB(255, 255, 255),
+            Width = 2.5,
+            Gradient = true, 
+            GradientRGB1 = Color3.fromRGB(200, 0, 0), 
+            GradientRGB2 = Color3.fromRGB(60, 60, 125), 
+            GradientRGB3 = Color3.fromRGB(0, 255, 0), 
+        },
+        Boxes = {
+            Filled = {
+                Enabled = false,
+                Transparency = 0.75,
+                RGB = Color3.fromRGB(0, 0, 0),
+            },
+            Full = {
+                Enabled = false,
+                RGB = Color3.fromRGB(17, 168, 255),
+            },
+        }
+    }
+}
+
 
 -- Helper Functions
 local Functions = {}
@@ -336,6 +378,6 @@ end
 
 -- Initialize the ESP
 SimpleESP:Initialize()
-print("Library Made By 7PX$")
+print("Ran Script")
 
 return SimpleESP
