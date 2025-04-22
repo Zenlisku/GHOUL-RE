@@ -6,7 +6,7 @@ local LocalPlayer = Players.LocalPlayer
 local Cam = workspace.CurrentCamera
 
 local SimpleESP = {
-    Enabled = false,
+    Enabled = true,
     TeamCheck = false,
     MaxDistance = 500,
     FontSize = 11,
@@ -311,23 +311,43 @@ local function ApplyESP(plr)
                     end
                 end
                 
-                -- Names ESP
-                Name.Visible = SimpleESP.Drawing.Names.Enabled
-                local rankValue = plr.Character:FindFirstChild("Rank") and tonumber(plr.Character.Rank.Value) or 0
-                local rankText = rankValue > 0 and " [R" .. rankValue .. "]" or ""
-                Name.Text = plr.Name .. rankText
-                Name.Position = UDim2.new(0, Pos.X, 0, Pos.Y - h / 2 - 15)
-                
-                -- Distance ESP
-                Distance.Visible = SimpleESP.Drawing.Distances.Enabled
-                Distance.Text = string.format("%d meters", math.floor(Dist))
-                Distance.Position = UDim2.new(0, Pos.X, 0, Pos.Y + h / 2 + 7)
-                
-                -- Race Information
-                local Race = plr.Character:FindFirstChild("Race") and plr.Character.Race.Value or "Unknown"
-                RaceInfo.Text = "Race: " .. tostring(Race)
-                RaceInfo.Position = UDim2.new(0, Pos.X, 0, Pos.Y + h / 2 + 24)
-                RaceInfo.Visible = true
+-- Names ESP
+Name.Visible = SimpleESP.Drawing.Names.Enabled
+local rankValue = plr.Character:FindFirstChild("Rank") and tonumber(plr.Character.Rank.Value) or 0
+local Race = plr.Character:FindFirstChild("Race") and plr.Character.Race.Value or "Unknown"
+local maxRank = (Race == "Ghoul") and 10 or 9
+local rankText = ""
+
+if rankValue > 0 then
+    if rankValue >= maxRank then
+        rankText = " [Max Rank]"
+    else
+        rankText = " [R" .. rankValue .. "/" .. maxRank .. "]"
+    end
+end
+
+Name.Text = plr.Name .. rankText
+Name.Position = UDim2.new(0, Pos.X, 0, Pos.Y - h / 2 - 15)
+
+-- Distance ESP
+Distance.Visible = SimpleESP.Drawing.Distances.Enabled
+Distance.Text = string.format("%d meters", math.floor(Dist))
+Distance.Position = UDim2.new(0, Pos.X, 0, Pos.Y + h / 2 + 7)
+
+-- Race Information
+local raceDisplayText = Race
+local raceColor = Color3.fromRGB(0, 248, 112) -- Default white
+
+if Race == "Ghoul" then
+    raceColor = Color3.fromRGB(255, 0, 0) -- Red for Ghouls
+elseif Race == "Human" then
+    raceDisplayText = "CCG" -- Change Human to CCG
+    raceColor = Color3.fromRGB(0, 0, 255) -- Blue for CCG
+end
+
+RaceInfo.Text = raceDisplayText
+RaceInfo.TextColor3 = raceColor
+RaceInfo.Position = UDim2.new(0, Pos.X, 0, Pos.Y + h / 2 + 24)
                 
                 -- RC Cells (Update every 10 seconds to save performance)
                 if tick() - lastRCUpdate > 10 then
