@@ -1,4 +1,4 @@
-local SimpleESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/7PXS/GHOUL-RE/refs/heads/main/soruce/library.lua"))()
+local SimpleESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenlisku/GHOUL-RE/refs/heads/main/soruce/library.lua"))()
 
 repeat wait() until game:IsLoaded()
 
